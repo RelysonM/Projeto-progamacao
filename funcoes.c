@@ -37,6 +37,7 @@ char menuFuncao(void) {
 	printf("##  1 - Horóscopo semanal     ##\n");
 	printf("##  2 - Mais sobre seu sígno  ##\n");
 	printf("##  3 - Tarot virtual         ##\n");
+    printf("##  4 - Relatório de consulta ##\n");
 	printf("##  0 - Alterar usuário       ##\n");
 	printf("##                            ##\n");
 	printf("################################\n");
@@ -47,6 +48,41 @@ char menuFuncao(void) {
 	return opcao;
 }
 
+void cadastro(void){
+    char nome[30], senha[11], email[30];
+    int aa, mm, dd;
+	printf("Digite seu nome: ");
+	scanf("%s", nome);
+    printf("Digite seu E-mail: ");
+    scanf("%s", email);
+    validaEmail(email);
+    while(validaEmail(email)){
+        printf("Digite seu E-mail novamente: ");
+        scanf("%s", email);
+    }
+	printf("Digite sua data de nascimento\n");
+	printf("Dia: ");
+	scanf("%d", &dd);
+	printf("Mês: ");
+	scanf("%d", &mm);
+	printf("Ano: ");
+	scanf("%d", &aa);
+    dataValida(dd, mm, aa);
+    while(!(dataValida(dd, mm, aa))){
+        printf("\nData invalida! Digite novamente: ");
+        printf("\nDigite sua data de nascimento\n");
+	    printf("Dia: ");
+	    scanf("%d", &dd);
+	    printf("Mês: ");
+	    scanf("%d", &mm);
+	    printf("Ano: ");
+	    scanf("%d", &aa);
+    }
+	printf("\nDigite uma senha de até 10 caracteres: ");
+	scanf("%s", senha);
+	printf("\n");
+	printf("Cadastro concluido com sucesso, efetue o login!\n");
+}
 
 
 void alterar(void){
@@ -77,7 +113,6 @@ void login(char* nome, char* senha){
 		printf("Por favor inseira os dados novamente\n");
 		login(nome, senha);
 	}
-
 }
 
 void horoscopo(void){
@@ -98,7 +133,7 @@ void tarot(void){
 	printf("\n");
 }
 
-
+// função feita por @flaviusgorgonio
 int dataValida(int dd, int mm, int aa) {
 	int maiorDia;
 	if (aa < 0 || mm < 1 || mm > 12 || dd < 1)
@@ -128,4 +163,45 @@ int bissexto(int aa) {
  	} else {
  		return 0;
  	}
+}
+
+
+int validaEmail(char* email) {
+    int tam=strlen(email);
+    int arroba = 0, ponto = 0, antesPonto = 0, depoisPonto = 0, i;
+
+    for (i = 0; i < tam; i++) {
+        char c = email[i];
+        if(c == '@') {
+            if (arroba){
+               break; // não pode ter uma segunda @
+            }
+            arroba = 1;
+            if (i < 3){
+                break; // se @ vier antes de 3 caracteres, erro
+            }
+        }else if (arroba) { // se já encontrou @
+            if (ponto) { // se já encontrou . depois de @ 
+            depoisPonto++;
+            }else if(c == '.') {
+                ponto = 1;
+                if (antesPonto < 3) {
+                break; // se . depois de @ vier antes de 3 caracteres, erro
+                }
+            }else {
+                antesPonto++;
+            }
+        }
+    }
+
+    if (i == tam && depoisPonto > 1){
+        return 0;
+    }
+    return 1;
+}
+
+void relatorio(void){
+	printf("==Área de Relatórios==\n");
+	printf("==Em desenvolvimento==\n");
+	printf("\n");
 }

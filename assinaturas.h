@@ -11,3 +11,6 @@ void signo(void);
 void tarot(void);
 int dataValida(int, int, int);
 int bissexto(int);
+void cadastro(void);
+int validaEmail(char*);
+void relatorio(void);
